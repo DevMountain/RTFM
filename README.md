@@ -58,4 +58,7 @@ $scope.replies = $scope.currentThread.$child('replies');
 
 * We've got our currentThread, now when the user types into the newReply input and presses enter, let's make a 'addReply' method that gets called (very similar to our addThread method) and uses $add to add the newReply onto the currentThread's replies.
 
-##Step 6 (Black Diamond): Use SimpleLogin to add authentication to RTFM
+##Step 6: Add some love
+* Add some basic CSS so that this feels a little bit more like a forum. Feel free to go crazy here, but here's a working example: http://devmtn.s3-website-us-east-1.amazonaws.com/
+
+##Step 6 (Black Diamond): Use [SimpleLogin](https://www.firebase.com/docs/angular/reference.html#firebasesimplelogin) to add authentication to RTFM
