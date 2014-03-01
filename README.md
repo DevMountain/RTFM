@@ -61,4 +61,4 @@ $scope.replies = $scope.currentThread.$child('replies');
 ##Step 6: Add some love
 * Add some basic CSS so that this feels a little bit more like a forum. Feel free to go crazy here, but here's a working example: http://devmtn.s3-website-us-east-1.amazonaws.com/
 
-##Step 6 (Black Diamond): Use [SimpleLogin](https://www.firebase.com/docs/angular/reference.html#firebasesimplelogin) to add authentication to RTFM
+##Step 7 (Black Diamond): Use [SimpleLogin](https://www.firebase.com/docs/angular/reference.html#firebasesimplelogin) to add authentication to RTFM
