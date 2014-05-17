@@ -1,0 +1,33 @@
+<h1>RTFM</h1>
+
+<div>
+    <button ng-click="logOut()">Log Out</button>
+    user: {{ currentUser }}
+</div>
+
+<ul>
+    <li ng-repeat="(key, thread) in threads">
+        <div>ID: {{ key }}</div>
+        <div>Name: <input type="text" ng-model="thread.name"/></div>
+        <div>Description: <input type="text" ng-model="thread.description"/></div>
+        <button ng-click="threads.$remove(key)">Remove Thread</button>
+        <ul>
+            <li ng-repeat="(replyKey, reply) in thread.replies">
+                {{ replyKey }}: {{ reply }}
+                <button ng-click="threads.$child(key).$child('replies').$remove(replyKey);">Delete</button>
+            </li>
+        </ul>
+        <form>
+            <input type="text" ng-model="newReply.title" placeholder="Title..."/>
+            <input type="text" ng-model="newReply.text" placeholder="Reply..."/>
+            <button ng-click="addReply(key, newReply); newReply={};">Add Reply</button>
+        </form>
+        <hr>
+    </li>
+</ul>
+
+<form>
+    <input type="text" ng-model="newThread.name" placeholder="Name..."/>
+    <input type="text" ng-model="newThread.description" placeholder="Description..."/>
+    <button ng-click="addThread(newThread)">Add Thread</button>
+</form>
