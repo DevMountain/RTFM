@@ -5,10 +5,104 @@ A project start for practicing using Firebase with AngularJS.
 
 We're going to create a multi-user, real-time forum (RTFM).
 
-##Step 1: Create project
-* Using Yeoman, create an Angular app. Don't check Sass, use Bootstrap, and don't use any of the Angular-generator defaults.
-* Using bower, install firebase (and save it as a dependency)
-* Manually include a link to angularfire in your index.html (link here: https://cdn.firebase.com/libs/angularfire/0.7.0/angularfire.min.js). Make sure you include it *after* the Angular and Firebase includes, but *before* your own Angular script files.
+## Step 1: Create project
+1. Using Yeoman, create an Angular app. Don't check Sass, use Bootstrap, and don't use any of the Angular-generator
+defaults.
+2. Install firebase, angularfire and angular-ui-router using bower:
+```bower install --save firebase angularfire angular ui-router```.
+
+## Step 2: Configure Module
+
+1. Add ```firebase``` and ```ui.router``` to your module dependencies.
+2. Add ```$stateProvider``` and ```$urlRouterProvider``` to your module's injections.
+3. Stub in routes for ```/threads``` and ```/threads/$threadId```.
+4. Use ```$urlRouterProvider.otherwise()``` to configure a default URL.
+
+
+
+```
+/*
+ * app.js
+ */
+
+'use strict';
+
+angular
+  .module('rtfmApp', ['firebase', 'ui.router'])
+  .config(function ($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise('/threads');
+
+    $stateProvider
+      .state('threads', {
+        url: '/threads'
+      })
+      .state('thread', {
+        url: '/thread/$threadId'
+      });
+
+  });
+```
+
+## Step 3: Set Up Environment Variables
+
+1. Create a new file at ```/app/env.js``` and set it up like so...
+
+```
+window.env = {
+  "environment": "development",
+  "firebase": "https://rtfm-demo.firebaseio.com/chris"
+};
+```
+
+Feel free to use my ```rtfm-demo``` firebase, or create you own at [firebase.com](https://firebase.com). If you use
+my firebase, please change the base to reflect your name rather than 'chris'. For example you could use
+```https://rtfm-demo.firebaseio.com/supermario```. All this will do is nest your firebase data under ```supermario``` so
+that your data doesn't mix with the rest of the group's.
+
+2. Import ```env.js``` in your ```index.html``` file so that ```window.env``` is created before the rest of your
+JS files load.
+
+```
+<!--Environment vars attached to window.env-->
+    <script src="env.js"></script>
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="lib/modernizr/modernizr.js"></script>
+<script src="lib/jquery/dist/jquery.js"></script>
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="lib/firebase/firebase.js"></script>
+<script src="lib/angularfire/dist/angularfire.min.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+```
+
+3. Create an EnvironmentService to make your environment variables injectable into any Angular module using yeoman:
+```yo angular:service environment-service```
+
+```
+'use strict';
+
+angular.module('rtfmApp')
+  .service('EnvironmentService', function EnvironmentService($window) {
+    return {
+      getEnv: function () {
+        return $window.env;
+      }
+    }
+  });
+```
+
+## Step 4: Create a Thread Service
+
+1. Use yeoman to create the ThreadService ```yo angular:service thread-service```.
+2. Create methods to get all threads and get individual threads.
+
+```
+
+```
 
 ##Step 2: Create a Thread Controller
 *NOTE:* Because there are some incompatibilities with angular-ui-router, Firebase, and Yeoman, we can't use the angular-ui-router in this project. 
