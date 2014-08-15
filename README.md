@@ -188,8 +188,10 @@ angular.module('rtfmApp')
 2. Create the ```logMeIn``` function in your ```LoginCtrl```. Have it ```alert``` the username for now.
 3. Create a function in ```EnvironmentService``` called ```saveUsername``` that accepts a username and saves it to
 local storage using ```$window.localStorage.setItem('username', username);```.
-4. Create another function in ```EnvironmentService``` called ```getUsername``` that returns the username with
-```$window.localStorage.getItem('username');```.
+4. Create another function in ```EnvironmentSerice``` called ```getUsername``` that returns the username with
+
+```$window.localStorage.getItem('username');```
+
 5. Inject ```$state``` into ```LoginCtrl``` and use it to forward the user to the ```threads``` state after login.
 6. Use Yeoman to create a ```views/threads.html``` view and a ```ThreadsCtrl``` controller. Add the new view and
 controller to the ```threads``` state in ```app.js```.
