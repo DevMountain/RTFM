@@ -36,9 +36,7 @@ Prefix the choice with ! to persist it to bower.json
 
 
 ```
-/*
- * app.js
- */
+// app.js
 
 'use strict';
 
@@ -151,9 +149,7 @@ read out ```{{ env }}}``` in your ```login.html``` view to confirm that your env
 correctly. You should see your ```window.env``` object logged out onto your login view.
 
 ```
-/*
- * Login.js
- */
+// Login.js
 
 'use strict';
 
@@ -165,9 +161,7 @@ angular.module('rtfmApp')
 ```
 
 ```
-/*
- * view/login.html
- */
+// view/login.html
 
  <p>This is the login view.</p>
 
@@ -215,11 +209,8 @@ The injection will be called ```username``` and the controller will be ```Secure
 
 
 ```
-/*
- * app/scripts/app.js
- */
+// app/scripts/app.js
 
- ...
 .state('secure', {
       abstract: true,
       controller: 'SecureCtrl',
@@ -239,9 +230,7 @@ The injection will be called ```username``` and the controller will be ```Secure
 5. Assign ```username``` to ```$scope.username```.
 
 ```
-/*
- * app/scripts/controllers/secure.js
- */
+// app/scripts/controllers/secure.js
 
 'use strict';
 
