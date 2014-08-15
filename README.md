@@ -64,12 +64,14 @@ angular.module('rtfmApp', ['firebase', 'ui.router']).config(function ($stateProv
 1. Open up ```index.html``` and switch Yeoman's default ```views/main.html``` view with a ```ui-view``` attribute.
 
 ***OLD***
+
 ```
 <!-- Add your site or application content here -->
     <div class="container" ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
 ```
 
 ***NEW***
+
 ```
 <!-- Add your site or application content here -->
     <div class="container" ui-view></div>
@@ -159,6 +161,8 @@ angular.module('rtfmApp')
   .controller('LoginCtrl', function ($scope, EnvironmentService) {
     $scope.env = EnvironmentService.getEnv();
   });
+
+```
 
 ```
 /*
