@@ -275,8 +275,8 @@ scope, so we can now secure any route by making it a child to ```secure```.
 7. Open up ```threads.html``` and log out ```{{ username }}``` to make sure that the username has resolved correctly.
 8. Notice that when you log in, you get a warning stating
 ```Error: Could not resolve 'threads' from state 'login'```. This is because your old ```threads``` view has
-been replaced with ```secure.threads```, so open up ```login.js``` and fix your redirect to look like this:
-```$state.go('secure.threads');```
+been replaced with ```secure.threads```, so open up ```login.js``` and fix your redirect to look like this:  ```$state.go('secure.threads');```
+
 9. When you succeed in hitting the ```/threads``` state, you'll get a blank screen, because we forgot to add a template
 with a ```ui-view``` to our ```secure``` abstract state. Parent templates need to know where to render their children,
 so you'll need to add a template to the ```secure``` state. It can be as simple as ```<div ui-view></div>```, or you can
