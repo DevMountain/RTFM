@@ -6,91 +6,29 @@ A project start for practicing using Firebase with AngularJS.
 We're going to create a multi-user, real-time forum (RTFM).
 
 ## Step 1: Create project
-1. Using Yeoman, create an Angular app. Don't check Sass, use Bootstrap, and don't use any of the Angular-generator
-defaults.
-2. Install your NPM dependencies ```npm install```.
-3. Install firebase, angularfire and angular-ui-router using bower:
-```bower install --save firebase angularfire angular-ui-router```. If Bower asks you to 'find a suitable version for
-angular', pick the latest version of Angular and persist your selection with a ```!```.
+1. Create the basic structure of your Angular application naming your app 'rtfmApp'.
+2. After you include Angular, include firebase, angularfire, and ngRoute as scripts in your html file (Google them), then the rest of your basic angular files.
 
-```
-Unable to find a suitable version for angular, please choose one:
-    1) angular#1.2.6 which resolved to 1.2.6 and is required by angular-mocks#1.2.6, angular-scenario#1.2.6, rtfm
-    2) angular#>= 1.0.8 which resolved to 1.2.6 and is required by angular-ui-router#0.2.10
-    3) angular#1.2.21 which resolved to 1.2.21 and is required by angularfire#0.8.0
-
-Prefix the choice with ! to persist it to bower.json
-
-
-[?] Answer: 3!
-```
-
-4. Run ```grunt serve``` to make sure that your boilerplate install is working. You should see a Yeoman welcome page.
 
 ## Step 2: Configure Module
-
-1. Open up ```app/scripts/app.js``` and add ```firebase``` and ```ui.router``` to your module dependencies.
-2. Add a ```.config``` function and include ```$stateProvider``` and ```$urlRouterProvider``` to your injections.
-3. Stub in routes for ```/login```, ```/threads``` and ```/threads/:threadId```.
-4. Use ```$urlRouterProvider.otherwise()``` to configure a default URL.
-
-
-```
-// app.js
-
-'use strict';
-
-angular.module('rtfmApp', ['firebase', 'ui.router']).config(function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/login');
-
-  $stateProvider
-    .state('login', {
-      url: '/login'
-    })
-    .state('threads', {
-      url: '/threads'
-    })
-    .state('thread', {
-      url: '/thread/:threadId'
-    });
-});
-
-```
+1. In your app.js file include ```firebase``` and ```ngRoute``` to your module's dependencies.
+3. Add a ```.config``` function and include ```$routeProvider``` to your injections.
+4. Create a router and add ```/login```, ```/threads``` and ```/threads/:threadId``` as the URLS
+5. Use .otherwise and redirectTo '/login'
 
 ## Step 3: Create Login View
 
-1. Open up ```index.html``` and switch Yeoman's default ```views/main.html``` view with a ```ui-view``` attribute.
-
-***OLD***
+1. In your index.html file include the following line to tie in your router.
 
 ```
 <!-- Add your site or application content here -->
-    <div class="container" ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
+    <div class="container" ng-view></div>
 ```
 
-***NEW***
+2. Create a login folder and inside that folder create a login view and a login controller
 
-```
-<!-- Add your site or application content here -->
-    <div class="container" ui-view></div>
-```
+3. Include your new view and controller in your ```login``` route.
 
-2. Create a login view and a login controller using Yeoman.
-```yo angular:view login```, ```yo angular:controller login```
-3. Include your new view and controller in your ```login``` state.
-
-```
-$stateProvider
-    .state('login', {
-      url: '/login',
-      templateUrl: '/views/login.html',
-      controller: 'LoginCtrl'
-    })
-    ...
-```
-
-4. Make sure ```grunt serve``` is still running so that you can see your new view. The Yeoman boilerplate view should
-be replaced with the text 'This is the login view.'
 
 ## Step 3: Set Up Environment Variables
 
@@ -108,32 +46,22 @@ my firebase, please change the base to reflect your name rather than 'chris'. Fo
 ```https://rtfm-demo.firebaseio.com/supermario```. All this will do is nest your firebase data under ```supermario``` so
 that your data doesn't mix with the rest of the group's.
 
-2. Import ```env.js``` in your ```index.html``` file so that ```window.env``` is created before the rest of your
+2. Include ```env.js``` in your ```index.html``` file so that ```window.env``` is created before the rest of your
 JS files load.
 
 ```
 <!--Environment vars attached to window.env-->
-    <script src="env.js"></script>
+  <script src="env.js"></script>
 
-<!-- build:js scripts/vendor.js -->
-<!-- bower:js -->
-  <script src="bower_components/jquery/jquery.js"></script>
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="bower_components/firebase/firebase.js"></script>
-  <script src="bower_components/firebase-simple-login/firebase-simple-login.js"></script>
-  <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<!-- endbower -->
-<!-- endbuild -->
+<!-- included scripts -->
+  <script src="path/to/angular.js"></script>
+  <script src="path/to/firebase.js"></script>
+  <script src="etc/etc/etc"></script>
+<!-- end scripts -->
 ```
 
-3. Create an EnvironmentService to make your environment variables injectable into any Angular module using yeoman:
-```yo angular:service environment-service```
-
+3. Create an EnvironmentService to make your environment variables injectable into any Angular module.
 ```
-'use strict';
-
 angular.module('rtfmApp')
   .service('EnvironmentService', function EnvironmentService($window) {
     return {
@@ -149,29 +77,6 @@ read out ```{{ env }}}``` in your ```login.html``` view to confirm that your env
 correctly. You should see your ```window.env``` object logged out onto your login view.
 
 5. Add ```app/env.js``` to your
-
-```
-// Login.js
-
-'use strict';
-
-angular.module('rtfmApp')
-  .controller('LoginCtrl', function ($scope, EnvironmentService) {
-    $scope.env = EnvironmentService.getEnv();
-  });
-
-```
-
-```
-// view/login.html
-
- <p>This is the login view.</p>
-
- <div>
-     {{ env }}
- </div>
-
-```
 
 ## Step 4: Create a Login Form
 
@@ -192,122 +97,34 @@ angular.module('rtfmApp')
 local storage using ```$window.localStorage.setItem('username', username);```.
 4. Create another function in ```EnvironmentSerice``` called ```getUsername``` that returns the username with $window.localStorage.getItem('username');
 
-5. Inject ```$state``` into ```LoginCtrl``` and use it to forward the user to the ```threads``` state after login.
-6. Use Yeoman to create a ```views/threads.html``` view and a ```ThreadsCtrl``` controller. Add the new view and
+5. Inject ```$location``` into ```LoginCtrl``` and use it to forward the user to the ```threads``` state after login (which is /threads as the URL, hint, look up how to use $location to redirect to a different URL).
+6. Create a ```threads.html``` view and a ```ThreadsCtrl``` controller in the appropriate folder. Add the new view and
 controller to the ```threads``` state in ```app.js```.
 7. Test your login and make sure that it forwards you to the stubbed threads view.
 
 
-## Step 5: Create A Logged In Abstract State
+## Step 5: Protect our Routes
+A problem we're going to run into as we're setting up our routing is sometimes we only want certain authenticated users to see certain routes. What we're going to do in this step is to secure our routes so only those people who we want to see certain routes will be able to. 
 
-You're going to want access to the uesrname through the logged-in sections of the app, and you're not going to want a
-user to access the logged-in portions of the app without having a saved username.
-An [abstract state](https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views#abstract-states)
-is a quick and easy way to accomplish this.
-
-1. Open ```app.js``` and create a new state, just after the ```login``` state. Call this state ```secure```.
-It will be an abstract state with one resolved injection and one controller.
-The injection will be called ```username``` and the controller will be ```SecureCtrl```.
-
-
+1. Head over to your app.js file and under your .config block, add a new .run block. This .run block will be the first thing that Angular runs before your app starts to be initialized. 
+2. Pass the .run function a callback that accepts three parameters, ```$rootScope```, ```$location```, and ```EnvironmentService```. $rootScope is exactly like ```$scope```, but it's global in the sense that anywhere in your application you can get properties that are on ```$rootScope```. $location allows us to redirect to different locations if we need to. EnvironmentService is where we're going to check if our user is Authenticated.
+3. Inside of our callback we're going to listen for the ```$routeChangeStart``` event. Whenever a route changes in our application, angular will emit a '$routeChangeStart' which will run our callback. The bigger picture here is that on every route change, we're going to check if that specific user should be seeing that new view.
 ```
-// app/scripts/app.js
-
-.state('secure', {
-      abstract: true,
-      controller: 'SecureCtrl',
-      resolve: {
-        username: function (EnvironmentService) {
-          return EnvironmentService.getUsername();
-        }
-      }
-    })
-...
-
+  $rootScope.$on('THEEVENT', function(){
+    //callback
+  })
 ```
-
-2. Use Yeoman to create ```SecureCtrl```.
-3. Open up ```app/scripts/controller/secure.js``` and inject ```username``` and ```$state``` into the ```SecureCtrl```.
-4. If ```username``` is missing, use ```$state.go``` to redirect to the ```login``` state.
-5. Assign ```username``` to ```$scope.username```.
-
-```
-// app/scripts/controllers/secure.js
-
-'use strict';
-
-angular.module('rtfmApp')
-  .controller('SecureCtrl', function ($scope, $state, username) {
-    if (!username) {
-      $state.go('login');
-    }
-
-    $scope.username = username;
-  });
-```
-
-6. Open up ```app.js``` and make the ```threads``` route and the ```thread``` route child routes to ```secure```. Child
-routes are only instantiated after all parent routes have resolved, and child routes have access to their parent's
-scope, so we can now secure any route by making it a child to ```secure```.
-
-```
-...
-.state('secure', {
-      abstract: true,
-      controller: 'SecureCtrl',
-      resolve: {
-        username: function (EnvironmentService) {
-          return EnvironmentService.getUsername();
-        }
-      }
-    })
-    .state('secure.threads', {
-      url: '/threads',
-      templateUrl: 'views/threads.html',
-      controller: 'ThreadsCtrl'
-    })
-    .state('secure.thread', {
-      url: '/thread/:threadId'
-    })
-...
-```
-
-7. Open up ```threads.html``` and log out ```{{ username }}``` to make sure that the username has resolved correctly.
-8. Notice that when you log in, you get a warning stating
-```Error: Could not resolve 'threads' from state 'login'```. This is because your old ```threads``` view has
-been replaced with ```secure.threads```, so open up ```login.js``` and fix your redirect to look like this:  ```$state.go('secure.threads');```
-
-9. When you succeed in hitting the ```/threads``` state, you'll get a blank screen, because we forgot to add a template
-with a ```ui-view``` to our ```secure``` abstract state. Parent templates need to know where to render their children,
-so you'll need to add a template to the ```secure``` state. It can be as simple as ```<div ui-view></div>```, or you can
-create a new template file with a ```ui-view``` and include it with ```templateUrl```.
-
-```
-// Add the simplest template to give 'secure' a place to inject it's child templates
-.state('secure', {
-  abstract: true,
-  template: '<div ui-view>',
-  controller: 'SecureCtrl',
-  resolve: {
-    username: function (EnvironmentService) {
-      return EnvironmentService.getUsername();
-    }
-  }
-})
-```
+is how you tell angular to listen for certain events. So in side your .run block, tell angular to listen for the '$routeChangeStart' event and pass it a callback function with a 'event', 'next', and 'current' parameter. As you can imagine, 'event' is the event that's happening, 'next' is the route the application is going to, and 'current' is the current route the application is on.
+4. Inside your callback, check to see if ```EnvironmentService.getUserName()''' returns a truthy value, if it doesn't that means the user hasn't been created - which means we need to redirect the user to the login page IE $location.path('/login'). If it does, set a property on $rootScope (for now) of username with the value being what getUserName returned.
 
 ## Step 4: Create a Thread Service and Use Firebase Refs
 
-1. Use yeoman to create the ThreadService ```yo angular:service thread-service```.
+1. Create a ThreadService and put it the appropriate folder.
 2. Create methods named ```getThreads``` and ```getThread``` to generate AngularFire references to all threads and any
 individual thread. You'll need to inject ```EnvironmentService``` to get your Firebase url and you'll need to inject
 ```$firebase``` to generate Firebase references (heretofore referred to as "refs").
 
 ```
-// app/scripts/controllers/thread-service.js
-
-'use strict';
-
 angular.module('rtfmApp')
   .service('ThreadService', function ThreadService(EnvironmentService, $firebase) {
     var firebaseUrl = EnvironmentService.getEnv().firebase;
@@ -327,8 +144,7 @@ angular.module('rtfmApp')
 3. Inject the ```threadsRef``` into the ```ThreadsCtrl``` using a ```resolve``` attribute in your router.
 
 ```
-.state('secure.threads', {
-  url: '/threads',
+.when('/threads', {
   templateUrl: 'views/threads.html',
   controller: 'ThreadsCtrl',
   resolve: {
@@ -409,8 +225,6 @@ to ```$scope``` and should accept a username and a thread title as arguments. It
 add threads in your view and watch them automatically add themselves to the threads list.
 
 ```
-'use strict';
-
 angular.module('rtfmApp')
   .controller('ThreadsCtrl', function ($scope, threadsRef) {
 
@@ -433,15 +247,13 @@ angular.module('rtfmApp')
 
 ### Step 6: Set Up Individual Thread Views
 
-1. Create a ```ThreadCtrl``` and ```app/views/thread.html``` using Yeoman: ```yo angular:controller thread```, and
-```yo angular:view thread```.
+1. Create a ```ThreadCtrl``` and a ```thread.html```
 2. Add the new controller and view to the ```thread``` state in ```app.js```. Also create a resolve for ```thread```
-that uses ```$stateParams.threadId``` and ```ThreadService.getThread()``` to inject each thread's AngularFire ref into
+that uses ```$routeParms.threadId``` and ```ThreadService.getThread()``` to inject each thread's AngularFire ref into
 your new ```ThreadCtrl```.
 
 ```
-.state('secure.thread', {
-  url: '/thread/:threadId',
+.when('thread/:threadId', {
   templateUrl: 'views/thread.html',
   controller: 'ThreadCtrl',
   resolve: {
@@ -456,10 +268,6 @@ your new ```ThreadCtrl```.
 to bind the thread to ```$scope.thread```.
 
 ```
-// app/scripts/controllers/thread.js
-
-'use strict';
-
 angular.module('rtfmApp')
   .controller('ThreadCtrl', function ($scope, threadRef) {
     var thread = threadRef.$asObject();
@@ -506,10 +314,6 @@ This may seem like a lot of steps, but you've already gone through these steps t
 ```threadRef```. The new ```commentsRef``` follows the same pattern.
 
 ```
-// app/scripts/services/thread-service.js
-
-'use strict';
-
 angular.module('rtfmApp')
   .service('ThreadService', function ThreadService(EnvironmentService, $firebase) {
     var firebaseUrl = EnvironmentService.getEnv().firebase;
@@ -532,10 +336,7 @@ angular.module('rtfmApp')
 ```
 
 ```
-// app/scripts/app.js
-
-.state('secure.thread', {
-  url: '/thread/:threadId',
+.when('/thread', {
   templateUrl: 'views/thread.html',
   controller: 'ThreadCtrl',
   resolve: {
@@ -550,10 +351,6 @@ angular.module('rtfmApp')
 ```
 
 ```
-// app/scripts/controllers/thread.js
-
-'use strict';
-
 angular.module('rtfmApp')
   .controller('ThreadCtrl', function ($scope, threadRef, commentsRef) {
     var thread = threadRef.$asObject();
