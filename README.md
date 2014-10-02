@@ -210,7 +210,7 @@ each thread's unique page.
 
     <ul>
         <li ng-repeat="thread in threads">
-            <a ng-href="#/secure.thread({threadId: thread.$id})">
+            <a ng-href="#/secure.thread/{{thread.$id}}">
                 <span>{{ thread.title }}</span>
                 <span>(by {{ thread.username }})</span>
             </a>
