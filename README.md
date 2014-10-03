@@ -97,9 +97,9 @@ correctly. You should see your ```window.env``` object logged out onto your logi
 local storage using ```$window.localStorage.setItem('username', username);```.
 4. Create another function in ```EnvironmentSerice``` called ```getUsername``` that returns the username with $window.localStorage.getItem('username');
 
-5. Inject ```$location``` into ```LoginCtrl``` and use it to forward the user to the ```threads``` state after login (which is /threads as the URL, hint, look up how to use $location to redirect to a different URL).
+5. Inject ```$location``` into ```LoginCtrl``` and use it to forward the user to the ```threads``` route after login (which is /threads as the URL, hint, look up how to use $location to redirect to a different URL).
 6. Create a ```threads.html``` view and a ```ThreadsCtrl``` controller in the appropriate folder. Add the new view and
-controller to the ```threads``` state in ```app.js```.
+controller to the ```threads``` route in ```app.js```.
 7. Test your login and make sure that it forwards you to the stubbed threads view.
 
 
@@ -210,7 +210,7 @@ each thread's unique page.
 
     <ul>
         <li ng-repeat="thread in threads">
-            <a ui-sref="secure.thread({threadId: thread.$id})">
+            <a ng-href="#/secure.thread/{{thread.$id}}">
                 <span>{{ thread.title }}</span>
                 <span>(by {{ thread.username }})</span>
             </a>
@@ -248,8 +248,8 @@ angular.module('rtfmApp')
 ### Step 6: Set Up Individual Thread Views
 
 1. Create a ```ThreadCtrl``` and a ```thread.html```
-2. Add the new controller and view to the ```thread``` state in ```app.js```. Also create a resolve for ```thread```
-that uses ```$routeParms.threadId``` and ```ThreadService.getThread()``` to inject each thread's AngularFire ref into
+2. Add the new controller and view to the ```thread``` route in ```app.js```. Also create a resolve for ```thread```
+that uses ```$route.current.params.threadId``` and ```ThreadService.getThread()``` to inject each thread's AngularFire ref into
 your new ```ThreadCtrl```.
 
 ```
@@ -257,8 +257,8 @@ your new ```ThreadCtrl```.
   templateUrl: 'views/thread.html',
   controller: 'ThreadCtrl',
   resolve: {
-    threadRef: function (ThreadService, $stateParams) {
-      return ThreadService.getThread($stateParams.threadId);
+    threadRef: function (ThreadService, $route) {
+      return ThreadService.getThread($route.current.params.threadId);
     }
   }
 });
@@ -308,7 +308,7 @@ Notice how we're looping through ```comment in comments```? We're going to want 
 comments in its Firebase data structure. We haven't created the ```comments``` "array" yet, but we can create an
 AngularFire ref to it anyway. Firebase will treat that ref as if it already exists, so we can loop through it and add
 to it seamlessly. This will require creating a new ```getComments``` method in ```ThreadService``` and injecting this
-new ```commentsRef``` into ```ThreadCtrl``` using a ```resolve``` in your ```secure.thread``` state.
+new ```commentsRef``` into ```ThreadCtrl``` using a ```resolve``` in your ```secure.thread``` route.
 
 This may seem like a lot of steps, but you've already gone through these steps twice with ```threadsRef``` and
 ```threadRef```. The new ```commentsRef``` follows the same pattern.
@@ -340,11 +340,11 @@ angular.module('rtfmApp')
   templateUrl: 'views/thread.html',
   controller: 'ThreadCtrl',
   resolve: {
-    threadRef: function (ThreadService, $stateParams) {
-      return ThreadService.getThread($stateParams.threadId);
+    threadRef: function (ThreadService, $route) {
+      return ThreadService.getThread($route.current.params.threadId);
     },
-    commentsRef: function (ThreadService, $stateParams) {
-      return ThreadService.getComments($stateParams.threadId);
+    commentsRef: function (ThreadService, $route) {
+      return ThreadService.getComments($route.current.params.threadId);
     }
   }
 })
