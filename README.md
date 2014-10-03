@@ -249,7 +249,7 @@ angular.module('rtfmApp')
 
 1. Create a ```ThreadCtrl``` and a ```thread.html```
 2. Add the new controller and view to the ```thread``` route in ```app.js```. Also create a resolve for ```thread```
-that uses ```$routeParms.threadId``` and ```ThreadService.getThread()``` to inject each thread's AngularFire ref into
+that uses ```$route.current.params.threadId``` and ```ThreadService.getThread()``` to inject each thread's AngularFire ref into
 your new ```ThreadCtrl```.
 
 ```
@@ -257,8 +257,8 @@ your new ```ThreadCtrl```.
   templateUrl: 'views/thread.html',
   controller: 'ThreadCtrl',
   resolve: {
-    threadRef: function (ThreadService, $routeParams) {
-      return ThreadService.getThread($routeParams.current.threadId);
+    threadRef: function (ThreadService, $route) {
+      return ThreadService.getThread($route.current.params.threadId);
     }
   }
 });
@@ -340,11 +340,11 @@ angular.module('rtfmApp')
   templateUrl: 'views/thread.html',
   controller: 'ThreadCtrl',
   resolve: {
-    threadRef: function (ThreadService, $routeParams) {
-      return ThreadService.getThread($routeParams.current.threadId);
+    threadRef: function (ThreadService, $route) {
+      return ThreadService.getThread($route.current.params.threadId);
     },
-    commentsRef: function (ThreadService, $routeParams) {
-      return ThreadService.getComments($routeParams.current.threadId);
+    commentsRef: function (ThreadService, $route) {
+      return ThreadService.getComments($route.current.params.threadId);
     }
   }
 })
