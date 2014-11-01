@@ -76,7 +76,6 @@ angular.module('rtfmApp')
 read out ```{{ env }}}``` in your ```login.html``` view to confirm that your environment variables are injecting
 correctly. You should see your ```window.env``` object logged out onto your login view.
 
-5. Add ```app/env.js``` to your
 
 ## Step 4: Create a Login Form
 
