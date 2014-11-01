@@ -96,7 +96,12 @@ correctly. You should see your ```window.env``` object logged out onto your logi
 local storage using ```$window.localStorage.setItem('username', username);```.
 4. Create another function in ```EnvironmentSerice``` called ```getUsername``` that returns the username with $window.localStorage.getItem('username');
 
-5. Inject ```$location``` into ```LoginCtrl``` and use it to forward the user to the ```threads``` route after login (which is /threads as the URL, hint, look up how to use $location to redirect to a different URL).
+5. Inject ```$location``` into ```LoginCtrl``` and use it to forward the user to the ```threads``` route after login (which is /threads as the URL, hint, look up how to use $location to redirect to a different URL). Here's an example of how to do that. Change the code to work with your app. 
+```
+$scope.$apply(function(){
+	$location.path('/dashboard/' + user.uid)
+});
+```
 6. Create a ```threads.html``` view and a ```ThreadsCtrl``` controller in the appropriate folder. Add the new view and
 controller to the ```threads``` route in ```app.js```.
 7. Test your login and make sure that it forwards you to the stubbed threads view.
