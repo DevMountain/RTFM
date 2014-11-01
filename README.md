@@ -102,6 +102,7 @@ $scope.$apply(function(){
 	$location.path('/dashboard/' + user.uid)
 });
 ```
+
 6. Create a ```threads.html``` view and a ```ThreadsCtrl``` controller in the appropriate folder. Add the new view and
 controller to the ```threads``` route in ```app.js```.
 7. Test your login and make sure that it forwards you to the stubbed threads view.
