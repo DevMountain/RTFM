@@ -313,7 +313,7 @@ Notice how we're looping through ```comment in comments```? We're going to want 
 comments in its Firebase data structure. We haven't created the ```comments``` "array" yet, but we can create an
 AngularFire ref to it anyway. Firebase will treat that ref as if it already exists, so we can loop through it and add
 to it seamlessly. This will require creating a new ```getComments``` method in ```ThreadService``` and injecting this
-new ```commentsRef``` into ```ThreadCtrl``` using a ```resolve``` in your ```secure.thread``` route.
+new ```commentsRef``` into ```ThreadCtrl``` using a ```resolve``` in your ```thread``` route.
 
 This may seem like a lot of steps, but you've already gone through these steps twice with ```threadsRef``` and
 ```threadRef```. The new ```commentsRef``` follows the same pattern.
