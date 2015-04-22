@@ -41,7 +41,7 @@ Firebase is very dependent upon URLs, meaning, if you want to set data, get data
 
 You can think of this ```fb``` constant as any other service. We're now able to inject ```fb``` anywhere we need it and grab the ```url``` property off of it in order to get our Firebase URL.
 
-*I recommend instead of using the rtfm-demo project, you go and create your own Firebase project so you can see and handle the data yourself. To do so, head to Firebase.com and sign up. Once you do that you'll have the option to create a new project. Once you do that, copy the URL it gives you and replace the rtfm-demo URL above with your new URL.
+*I recommend instead of using the rtfm-demo project, you go and create your own Firebase project so you can see and handle the data yourself. To do so, head to Firebase.com and sign up. Once you do that you'll have the option to create a new project. Once you do that, copy the URL it gives you and replace the rtfm-demo URL above with your new URL.*
 
 ```
 .constant('fb', {
