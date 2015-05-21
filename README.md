@@ -21,19 +21,10 @@ We're going to create a multi-user, real-time forum (RTFM).
   <div class="container" ng-view></div>
 ```
 
-## Step 3: Create Login Skeleton
-
 *Note: In today's project we'll ignore authentication, but tomorrow we'll make it so users need to log in to see certain routes/data and we'll persist that user state with Firebase. But for now, we'll just set up the basic structure for that in order to build on top of this functionality tomorrow.*
 
-- Create a "login" folder and inside that folder create a login view (login.html) and a login controller (loginCtrl.js)
 
-- Now, head over to your ```app.js``` file and include your new view and controller in your ```login``` route.
-
-- Inside ```login.html``` create a text input bound to ```$scope.username``` (using ```ng-model```) and a button that calls ```logMeIn()``` when clicked.
-
-- Now head over to your ```loginCtrl.js``` file and create the ```logMeIn``` function which (for now) will just alert ```$scope.username```.
-
-## Step 4: Create a Constant with your Firebase URL
+## Step 3: Create a Constant with your Firebase URL
 
 Firebase is very dependent upon URLs, meaning, if you want to set data, get data, remove data, etc, you'll do that based on your Firebase URL. Because of this, it's important that we're able to access our Firebase URL from anywhere. To accomplish this, we'll add a ```constant``` to our Angular app. A ```constant``` is a very common thing in Software Development. It allows us to set a value that won't change.
 
@@ -49,7 +40,7 @@ You can think of this ```fb``` constant as any other service. We're now able to 
 });
 ```
 
-## Step 5: User Service
+## Step 4: User Service
 
 We'll create a User Service which will manage the state of our user. Again, we won't worry too much about Authentication today, but tomorrow it will be nice to have these things built.
 
@@ -67,7 +58,7 @@ We'll create a User Service which will manage the state of our user. Again, we w
 
 *Tomorrow we'll make it so this Service actually manages a user using Firebase*.
 
-## Step 6: Reroute After Login
+## Step 5: Reroute After Login
 
 We eventually want to make it so that when a user logs in, if the login is successful, we'll reroute the user to the ```threads``` route (which we'll make in a bit).
 
@@ -81,7 +72,7 @@ $scope.$apply(function(){
 });
 ```
 
-## Step 7: Create your Threads Assets
+## Step 6: Create your Threads Assets
 
 Now we need to actually create our Thread view and controller.
 
@@ -91,7 +82,7 @@ Now we need to actually create our Thread view and controller.
 
 Tomorrow we'll add an 'event listener' which listens for anytime out app wants to changes routes. When it changes a route, it will go to the userService we built and see if that user is logged in. If the user is logged in, we'll continue to the threads view. If the user is not logged in, we'll redirect the user to the Login view.
 
-## Step 8: Create a Thread Service and Use Firebase Refs
+## Step 7: Create a Thread Service and Use Firebase Refs
 
 - Create a threadService and put it in the appropriate folder.
 
@@ -118,7 +109,7 @@ this.getThreads = function(){
 - Now, have the other method (```getThread```) take in a ```threadId``` as its only parameter and return a new instance of Firebase passing in base URL + ```/threads/``` + ```threadId```.
 
 
-## Step 9: Resolve the Firebase Data for your Controllers
+## Step 8: Resolve the Firebase Data for your Controllers
 
 Now that your threadService is set up, we're going to use Resolve in our routes in order to make sure the data in our Firebase is ready for us when our controller loads.
 
@@ -142,7 +133,7 @@ angular.module('rtfmApp')
 
 ```
 
-### Step 10: Set up Threads view
+### Step 9: Set up Threads view
 
 - Let's set up ```threads.html``` with a list of threads, an input and a button to create a new thread, and links to each thread's unique page.
 
@@ -188,7 +179,7 @@ angular.module('rtfmApp')
   });
 ```
 
-### Step 11: Set Up Individual Thread Views
+### Step 10: Set Up Individual Thread Views
 
 - Create a ```threadCtrl``` and a ```thread.html```
 - Add the new controller and view to the ```/threads/:threadId``` route in ```app.js```. Also create a resolve for ```thread```
