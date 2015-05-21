@@ -146,7 +146,7 @@ angular.module('rtfmApp')
   });
 ```
 
-### Step 10: Set Up Individual Thread Views
+### Step 8: Set Up Individual Thread Views
 
 - Create a ```threadCtrl``` and a ```thread.html```
 - Add the new controller and view to the ```/threads/:threadId``` route in ```app.js```. Also create a resolve for ```thread```
