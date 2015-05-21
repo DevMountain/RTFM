@@ -40,24 +40,6 @@ You can think of this ```fb``` constant as any other service. We're now able to 
 });
 ```
 
-## Step 4: User Service
-
-We'll create a User Service which will manage the state of our user. Again, we won't worry too much about Authentication today, but tomorrow it will be nice to have these things built.
-
-- In the appropriate place, create a file called userService.js.
-
-- In your userService.js file, create a Service called ```userService```.
-
-- Inject your ```fb``` constant into your userService so you can get your Firebase URL.
-
-- Create a local variable called ```user``` which equals an empty object.
-
-- Create a ```login``` method on your serive (```this```) which takes in a username, and for now, console.logs that username.
-
-- Create a ```getUser``` method on your service (```this```) which, for now, just returns the local ```user``` variable you create earlier.
-
-*Tomorrow we'll make it so this Service actually manages a user using Firebase*.
-
 ## Step 5: Reroute After Login
 
 We eventually want to make it so that when a user logs in, if the login is successful, we'll reroute the user to the ```threads``` route (which we'll make in a bit).
