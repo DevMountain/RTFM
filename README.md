@@ -28,7 +28,7 @@ We're going to create a multi-user, real-time forum (RTFM).
 
 Firebase is very dependent upon URLs, meaning, if you want to set data, get data, remove data, etc, you'll do that based on your Firebase URL. Because of this, it's important that we're able to access our Firebase URL from anywhere. To accomplish this, we'll add a ```constant``` to our Angular app. A ```constant``` is a very common thing in Software Development. It allows us to set a value that won't change.
 
-- Head over to your ```app.js``` file or wherever you're initiating your new app and right about your ```.config``` method, add a ```.constant``` method with the first argument being "fb" (which is the name of the constant) and the second argument being an object with a key of "url" whose value is "https://rtfm-demo.firebaseio.com/YOUR-GITHUBUSERNAME-HERE".
+- Head over to your ```app.js``` file or wherever you're initiating your new app and right above your ```.config``` method, add a ```.constant``` method with the first argument being "fb" (which is the name of the constant) and the second argument being an object with a key of "url" whose value is "https://rtfm-demo.firebaseio.com/YOUR-GITHUBUSERNAME-HERE".
 
 You can think of this ```fb``` constant as any other service. We're now able to inject ```fb``` anywhere we need it and grab the ```url``` property off of it in order to get our Firebase URL.
 
