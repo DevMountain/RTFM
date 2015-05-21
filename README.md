@@ -191,6 +191,7 @@ existing comments.
 
     <form name="newCommentForm">
         <input type="text" ng-model="newCommentText" placeholder="Write a comment..." required/>
+        <input type="text" ng-model="username" placeholder="Username..." required/>
         <button ng-disabled="newCommentForm.$invalid" ng-click="createComment(username, newCommentText)">Add Comment</button>
     </form>
 
