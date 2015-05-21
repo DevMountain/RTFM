@@ -47,9 +47,6 @@ Now we need to actually create our Thread view and controller.
 
 - Create a ```threads.html``` view and a ```threadsCtrl.js``` controller in the appropriate folder. Add the new view and controller to the ```/threads``` route in ```app.js```.
 
-- Test your login and make sure that it forwards you to the stubbed threads view that we just built.
-
-Tomorrow we'll add an 'event listener' which listens for anytime out app wants to changes routes. When it changes a route, it will go to the userService we built and see if that user is logged in. If the user is logged in, we'll continue to the threads view. If the user is not logged in, we'll redirect the user to the Login view.
 
 ## Step 7: Create a Thread Service and Use Firebase Refs
 
