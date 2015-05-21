@@ -41,14 +41,14 @@ You can think of this ```fb``` constant as any other service. We're now able to 
 ```
 
 
-## Step 6: Create your Threads Assets
+## Step 4: Create your Threads Assets
 
 Now we need to actually create our Thread view and controller.
 
 - Create a ```threads.html``` view and a ```threadsCtrl.js``` controller in the appropriate folder. Add the new view and controller to the ```/threads``` route in ```app.js```.
 
 
-## Step 7: Create a Thread Service and Use Firebase Refs
+## Step 5: Create a Thread Service and Use Firebase Refs
 
 - Create a threadService and put it in the appropriate folder.
 
@@ -75,7 +75,7 @@ this.getThreads = function(){
 - Now, have the other method (```getThread```) take in a ```threadId``` as its only parameter and return a new instance of Firebase passing in base URL + ```/threads/``` + ```threadId```.
 
 
-## Step 8: Resolve the Firebase Data for your Controllers
+## Step 6: Resolve the Firebase Data for your Controllers
 
 Now that your threadService is set up, we're going to use Resolve in our routes in order to make sure the data in our Firebase is ready for us when our controller loads.
 
@@ -99,7 +99,7 @@ angular.module('rtfmApp')
 
 ```
 
-### Step 9: Set up Threads view
+### Step 7: Set up Threads view
 
 - Let's set up ```threads.html``` with a list of threads, an input and a button to create a new thread, and links to each thread's unique page.
 
