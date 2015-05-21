@@ -13,8 +13,8 @@ We're going to create a multi-user, real-time forum (RTFM).
 ## Step 2: Configure Module
 - In your app.js file include ```firebase``` and ```ngRoute``` to your module's dependencies.
 - Add a ```.config``` function and include ```$routeProvider``` to your injections.
-- Create a router and add ```/login```, ```/threads``` and ```/threads/:threadId``` as the URLS.
-- Use ```.otherwise``` to ```redirectTo``` ```/login```.
+- Create a router and add ```/threads``` and ```/threads/:threadId``` as the URLS.
+- Use ```.otherwise``` to ```redirectTo``` ```/threads```.
 - In your index.html file, include your ng-view attribute/element in order to tie in your router. *Should look like this below*.
 
 ```
