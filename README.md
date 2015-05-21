@@ -40,19 +40,6 @@ You can think of this ```fb``` constant as any other service. We're now able to 
 });
 ```
 
-## Step 5: Reroute After Login
-
-We eventually want to make it so that when a user logs in, if the login is successful, we'll reroute the user to the ```threads``` route (which we'll make in a bit).
-
-- Inject ```$location``` into ```loginCtrl``` and use it to forward the user to the ```threads``` route after login (which is /threads as the URL, hint, look up how to use $location to redirect to a different URL).
-
-Here's an example of how to do that. You'll need to change the code to work for your use case.
-
-```
-$scope.$apply(function(){
-	$location.path('/dashboard/' + user.uid)
-});
-```
 
 ## Step 6: Create your Threads Assets
 
