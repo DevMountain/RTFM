@@ -112,6 +112,7 @@ angular.module('rtfmApp')
 
     <form name="newThreadForm">
         <input type="text" ng-model="newThreadTitle" placeholder="New thread title..." required/>
+        <input type="text" ng-model="username" placeholder="Username..." required/>
         <button ng-disabled="newThreadForm.$invalid" ng-click="createThread(username, newThreadTitle)">Add Thread</button>
     </form>
 
