@@ -212,7 +212,7 @@ This may seem like a lot of steps, but you've already gone through these steps t
 
 ```
   getComments: function (threadId) {
-    return $firebase(new Firebase(firebaseUrl + '/threads/' + threadId + '/comments'));
+    return $firebaseObject(new Firebase(firebaseUrl + '/threads/' + threadId + '/comments'));
   }
 ```
 
