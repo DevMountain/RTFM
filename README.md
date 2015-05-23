@@ -68,7 +68,7 @@ Because that was wordy...that method should look like this
 
 ```
 this.getThreads = function(){
-  return new Firebase(fb.url);
+  return new Firebase(fb.url + '/threads');
 }
 ```
 
