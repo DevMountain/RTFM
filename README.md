@@ -7,18 +7,18 @@ We're going to create a multi-user, real-time forum (RTFM).
 
 ## Step 1: Create Project
 - Create the basic structure of your Angular application naming your app 'rtfmApp'.
-- After you include Angular, include firebase, angularfire, and ngRoute as scripts in your html file (Google them), then the rest of your basic angular files.
+- After you include Angular, include firebase, angularfire, and ui-router as scripts in your html file (Google them), then the rest of your basic angular files.
 
 
 ## Step 2: Configure Module
-- In your app.js file include ```firebase``` and ```ngRoute``` to your module's dependencies.
-- Add a ```.config``` function and include ```$routeProvider``` to your injections.
+- In your app.js file include ```firebase``` and ```ui.router``` to your module's dependencies.
+- Add a ```.config``` function and include ```$stateProvider``` and ```$urlRouterProvider``` to your injections.
 - Create a router and add ```/threads``` and ```/threads/:threadId``` as the URLS.
-- Use ```.otherwise``` to ```redirectTo``` ```/threads```.
-- In your index.html file, include your ng-view attribute/element in order to tie in your router. *Should look like this below*.
+- Use ```.$urlRouterProvider.otherwise``` to redirect any other url to ```/threads```.
+- In your index.html file, include your ui-view attribute/element in order to tie in your router. *Should look like this below*.
 
 ```
-  <div class="container" ng-view></div>
+  <div class="container" ui-view></div>
 ```
 
 *Note: In today's project we'll ignore authentication, but tomorrow we'll make it so users need to log in to see certain routes/data and we'll persist that user state with Firebase. But for now, we'll just set up the basic structure for that in order to build on top of this functionality tomorrow.*
@@ -79,7 +79,7 @@ this.getThreads = function(){
 
 Now that your threadService is set up, we're going to use Resolve in our routes in order to make sure the data in our Firebase is ready for us when our controller loads.
 
-- Head over to your ```app.js``` file and in the ```.threads``` route, add a resolve property on the object whose value is another object which has a property of theadsRef whose value is a function. That function is going to take in the ```threadService``` we just built and it's going to return ```threadService.getThreads()```.
+- Head over to your ```app.js``` file and in the ```/threads``` route, add a resolve property on the object whose value is another object which has a property of theadsRef whose value is a function. That function is going to take in the ```threadService``` we just built and it's going to return ```threadService.getThreads()```.
 
 Now since we're using resolve, ```threadsRef``` will be available in our controller if we inject it in and its value will be the data which is coming from our getThreads() method.
 
@@ -90,8 +90,6 @@ Now since we're using resolve, ```threadsRef``` will be available in our control
 Remember, threadsRef is the result of calling ```getThreads``` which just returns us ```new Firebase('THE FIREBASE URL' + /thread)``` and ```$firebaseArray``` just makes it so it gives our data back to us as an Array.
 
 ```
-// app/scripts/controllers/threadsCtrl.js
-
 angular.module('rtfmApp')
   .controller('threadsCtrl', function ($scope, threadsRef, $firebaseArray) {
     $scope.threads = $firebaseArray(threadsRef)
@@ -141,7 +139,7 @@ angular.module('rtfmApp')
         title: title
       });
 
-    }
+    };
 
   });
 ```
@@ -150,18 +148,19 @@ angular.module('rtfmApp')
 
 - Create a ```threadCtrl``` and a ```thread.html```
 - Add the new controller and view to the ```/threads/:threadId``` route in ```app.js```. Also create a resolve for ```thread```
-that uses ```$route.current.params.threadId``` and ```threadService.getThread()``` to inject each thread's AngularFire ref into
+that uses ```$stateParams.threadId``` and ```threadService.getThread()``` to inject each thread's AngularFire ref into
 your new ```threadCtrl```.
 
 ```
-.when('threads/:threadId', {
-  templateUrl: 'views/thread.html',
-  controller: 'threadCtrl',
-  resolve: {
-    threadRef: function (threadService, $route) {
-      return threadService.getThread($route.current.params.threadId);
+.state('thread', {
+    url: '/threads/:threadId',
+    templateUrl: 'path/to/thread.html',
+    controller: 'threadCtrl',
+    resolve: {
+        threadRef: function (threadService, $stateParams) {
+            return threadService.getThread($stateParams.threadId);
+        }
     }
-  }
 });
 ```
 
@@ -170,8 +169,8 @@ your new ```threadCtrl```.
 ```
 angular.module('rtfmApp')
   .controller('threadCtrl', function ($scope, threadRef, $firebaseObject) {
-    var thread = $firebaseObject(threadRef);
 
+    var thread = $firebaseObject(threadRef);
     thread.$bindTo($scope, 'thread');
   });
 
@@ -182,8 +181,7 @@ angular.module('rtfmApp')
 AngularFire refs can get converted into AngularFire "objects". These "objects" can be bound to ```$scope``` using
 AngularFire's [$bindTo](https://www.firebase.com/docs/web/libraries/angular/api.html#angularfire-firebaseobject-bindto-scope-varname) function. This sets up 3-way binding from your view, through ```$scope``` and all the way back to your Firebase data store. You can edit these AngularFire "objects" in place in your view and watch the changes propagate throughout your entire app.
 
-- Edit ```app/views/thread.html``` to create a inputs to add comments under the thread as well as read out all
-existing comments.
+- Edit your thread template to create a inputs to add comments under the thread as well as read out all existing comments.
 
 ```
 <div>
@@ -216,13 +214,13 @@ This may seem like a lot of steps, but you've already gone through these steps t
   }
 ```
 
-- In your ```app.js``` file under your ```/threads/:threadId``` route under resolve, add a ```commentsRef``` method which takes in ```threadService``` as well as ```$route``` and return the invocation of ```threadService.getComments($route.current.params.threadId)```.
+- In your ```app.js``` file under your ```/threads/:threadId``` route under resolve, add a ```commentsRef``` method which takes in ```threadService``` as well as ```$stateParams``` and return the invocation of ```threadService.getComments($stateParams.threadId)```.
 
 It should look like this,
 
 ```
-  commentsRef: function (threadService, $route) {
-    return threadService.getComments($route.current.params.threadId);
+  commentsRef: function (threadService, $stateParams) {
+    return threadService.getComments($stateParams.threadId);
   }
 ```
 
@@ -232,7 +230,8 @@ It should look like this,
 
 ```
 .controller('threadCtrl', function ($scope, threadRef, commentsRef, $firebaseObject, $firebaseArray) {
-    var thread = $firebaseObject(threadRef)
+
+    var thread = $firebaseObject(threadRef);
 
     thread.$bindTo($scope, 'thread');
 
