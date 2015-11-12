@@ -17,7 +17,7 @@ We're going to create a multi-user, real-time forum (RTFM).
 - Use ```.$urlRouterProvider.otherwise``` to redirect any other url to ```/threads```.
 - In your index.html file, include your ui-view attribute/element in order to tie in your router. *Should look like this below*.
 
-```
+```html
   <div class="container" ui-view></div>
 ```
 
@@ -34,7 +34,7 @@ You can think of this ```fb``` constant as any other service. We're now able to 
 
 *I recommend instead of using the rtfm-demo project, you go and create your own Firebase project so you can see and handle the data yourself. To do so, head to Firebase.com and sign up. Once you do that you'll have the option to create a new project. Once you do that, copy the URL it gives you and replace the rtfm-demo URL above with your new URL.*
 
-```
+```javascript
 .constant('fb', {
   url: 'https://your-firebase-project'
 });
@@ -66,7 +66,7 @@ For example, if my base url was "https://tylers-cool-app.firebaseio.com" then I 
 
 Because that was wordy...that method should look like this
 
-```
+```javascript
 this.getThreads = function(){
   return new Firebase(fb.url + '/threads');
 }
@@ -89,7 +89,7 @@ Now since we're using resolve, ```threadsRef``` will be available in our control
 
 Remember, threadsRef is the result of calling ```getThreads``` which just returns us ```new Firebase('THE FIREBASE URL' + /thread)``` and ```$firebaseArray``` just makes it so it gives our data back to us as an Array.
 
-```
+```javascript
 angular.module('rtfmApp')
   .controller('threadsCtrl', function ($scope, threadsRef, $firebaseArray) {
     $scope.threads = $firebaseArray(threadsRef)
@@ -101,7 +101,7 @@ angular.module('rtfmApp')
 
 - Let's set up ```threads.html``` with a list of threads, an input and a button to create a new thread, and links to each thread's unique page.
 
-```
+```html
 <div>
     <p>Threads</p>
 
@@ -123,7 +123,8 @@ angular.module('rtfmApp')
 ```
 
 - You'll need to create a function in your ```threadsCtrl``` named ```createThread```. This function must be attached to ```$scope``` and should accept a username and a thread title as arguments. It will then use the AngularFire "array" ```$add``` function to add the new thread to the ```threads``` array. Once you get this working, you'll be able to add threads in your view and watch them automatically add themselves to the threads list.
-```
+
+```javascript
 angular.module('rtfmApp')
   .controller('threadsCtrl', function ($scope, threadsRef) {
 
@@ -151,7 +152,7 @@ angular.module('rtfmApp')
 that uses ```$stateParams.threadId``` and ```threadService.getThread()``` to inject each thread's AngularFire ref into
 your new ```threadCtrl```.
 
-```
+```javascript
 .state('thread', {
     url: '/threads/:threadId',
     templateUrl: 'path/to/thread.html',
@@ -166,7 +167,7 @@ your new ```threadCtrl```.
 
 - Inject ```threadRef``` into your ```threadCtrl``` and use AngularFire's ```$firebaseObject``` and ```$bindTo``` methods to bind the thread to ```$scope.thread```.
 
-```
+```javascript
 angular.module('rtfmApp')
   .controller('threadCtrl', function ($scope, threadRef, $firebaseObject) {
 
@@ -183,7 +184,7 @@ AngularFire's [$bindTo](https://www.firebase.com/docs/web/libraries/angular/api.
 
 - Edit your thread template to create a inputs to add comments under the thread as well as read out all existing comments.
 
-```
+```html
 <div>
     <h1>{{ thread.title }} (by {{ thread.username }})</h1>
 
@@ -208,7 +209,7 @@ This may seem like a lot of steps, but you've already gone through these steps t
 
 - In your ```threadService``` create a getComments method which takes in a ```threadId``` and returns a new Firebase instance passing in the base url + '/threads/' + threadId + '/comments'.
 
-```
+```javascript
   getComments: function (threadId) {
     return new Firebase(fb.url + '/threads/' + threadId + '/comments');
   }
@@ -218,7 +219,7 @@ This may seem like a lot of steps, but you've already gone through these steps t
 
 It should look like this,
 
-```
+```javascript
   commentsRef: function (threadService, $stateParams) {
     return threadService.getComments($stateParams.threadId);
   }
@@ -228,7 +229,7 @@ It should look like this,
 
 - Now add your ```createComment``` method to the $scope object. This method should take in a username and a text and then invoke the $add property on ```$scope.comments``` passing it an object with a key of username and the value being the username you passed in as well as a key of text and a value being the text you passed in. The final ```threadCtrl``` should look like this,
 
-```
+```javascript
 .controller('threadCtrl', function ($scope, threadRef, commentsRef, $firebaseObject, $firebaseArray) {
 
     var thread = $firebaseObject(threadRef);
