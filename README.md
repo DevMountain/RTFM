@@ -250,3 +250,73 @@ It should look like this,
 Notice that we've added a new `$scope.createComment` function. This will get called from the `thread.html` view and adds a comment to your AngularFire `comments` "array".
 
 At this point, you should be able to see a list of threads on the main `/threads` route. You should also be able to add a new thread, as well as click on any of the threads to drill down and see and add comments. All in real-time!
+
+# Day Two: Authentication
+
+We're going to add Firebase's authentication to our app. Buckle up.
+
+## Step 1: Prepare the app
+You need to go to your Firebase app and enable authentication. For this app we're going to enable email/password authentication.
+
+Once that's finished, add these additional routes to your app:
+
+### Login
+State: login
+Url: '/login'
+controller: 'loginCtrl'
+templateUrl: 'login.html'
+
+### Signup
+State: signup
+Url: '/signup'
+controller: 'signupCtrl'
+templateUrl: 'signup.html'
+
+## Step 2: Create and set up the userService
+We're going to utilize a service to manage our authentication for us. Create a userService and add the following methods:
+
+- `getUser` (returns the `$getAuth()` result)
+- `register` (returns the `$createUser(newUser)` result)
+- `login` (returns the `authWithPassword(user)` result)
+
+Above your service methods, create an authRef (using `Firebase`) and an auth object (using `$firebaseAuth`). This should look something like this:
+
+```javascript
+var authRef = new Firebase(firebaseUrl.url);
+var auth = $firebaseAuth(authRef);
+```
+
+## Step 3: Wire up the `login` and `signup` states
+In your signup controller, create a `$scope.register` method that calls the userService's `register` method. You'll need to pass in the new user object (including email and password) into this method. Be sure you have the inputs and ng-models necessary in your view to accomplish this.
+
+In the login controller, create a `$scope.login` method that calls the userService's `login` method. You'll need to pass in the user object (including email and password) from the view into this method. Be sure you have the inputs and ng-models necessary in your view to accomplish this. If the login succeeds, call `$state.go` to redirect the user to the threads page.
+
+## Step 4 (going further): Handle logging out
+
+We're going to use a nifty ability in routing to create a `logout` app.
+
+```javascript
+.state('logout', {
+	url: '/logout',
+	controller: function(UserService) {
+		return userService.logout();
+	},
+})
+```
+See what we're doing? The only purpose of this route state is to call the `userService.logout` method.
+
+```javascript
+this.logout = function(user) {
+	return auth.$unauth();
+}
+```
+
+You're also going to want to watch the `$onAuth` in the userService so we can send the user to the correct view when they're not logged in.
+
+```javascript
+auth.$onAuth(function(authData) {
+	if (!authData) {
+		$state.go('login')
+	}
+});
+```
