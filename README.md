@@ -144,6 +144,8 @@ angular.module('rtfmApp')
   });
 ```
 
+If you've done everything correctly, you should be able to load your page using a local server (e.g. http-server) and see the list of threads. Try to add some from your Firebase app's web console (open the URL in your browser), or add some from your app directly with the HTML provided.
+
 ### Step 8: Set Up Individual Thread Views
 
 - Create a `threadCtrl` and a `thread.html`
@@ -246,3 +248,5 @@ It should look like this,
 ```
 
 Notice that we've added a new `$scope.createComment` function. This will get called from the `thread.html` view and adds a comment to your AngularFire `comments` "array".
+
+At this point, you should be able to see a list of threads on the main `/threads` route. You should also be able to add a new thread, as well as click on any of the threads to drill down and see and add comments. All in real-time!
