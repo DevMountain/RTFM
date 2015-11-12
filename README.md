@@ -83,7 +83,7 @@ Now that your threadService is set up, we're going to use Resolve in our routes 
 
 Now since we're using resolve, ```threadsRef``` will be available in our controller if we inject it in and its value will be the data which is coming from our getThreads() method.
 
-- Open up your ```threadsCtrl.js``` Add pass in ```threadsRef``` to the threadsCtrl controller as well as ```$firebaseArray```.
+- Open up your ```threadsCtrl.js``` and pass in ```threadsRef``` to the ```threadsCtrl``` controller, as well as ```$firebaseArray```.
 
 - Set a property on the $scope object called ```threads``` which is set to ```$firebaseArray(threadsRef)```.
 
