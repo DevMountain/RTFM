@@ -10,12 +10,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('login', {
 			url: '/login',
 			controller: 'loginCtrl',
-			templateUrl: '/templates/login.html'
+			templateUrl: 'templates/login.html'
 		})
 		.state('signup', {
 			url: '/signup',
 			controller: 'signupCtrl',
-			templateUrl: '/templates/signup.html'
+			templateUrl: 'templates/signup.html'
 		})
 		.state('logout', {
 			url: '/logout',
@@ -26,7 +26,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('threads', {
 			url: '/threads',
 			controller: 'threadsCtrl',
-			templateUrl: '/templates/threads.html',
+			templateUrl: 'templates/threads.html',
 			resolve: {
 				threadsRef: function(ThreadService) {
 					return ThreadService.getThreads();
@@ -36,7 +36,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('thread', {
 			url: '/threads/:threadId',
 			controller: 'threadCtrl',
-			templateUrl: '/templates/thread.html',
+			templateUrl: 'templates/thread.html',
 			resolve: {
 				threadRef: function(ThreadService, $stateParams) {
 					return ThreadService.getThread($stateParams.threadId);
