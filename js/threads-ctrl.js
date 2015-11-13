@@ -2,9 +2,9 @@ angular.module('rtfmApp').controller('threadsCtrl', function(threadsRef, $scope,
 
 	$scope.threads = $firebaseArray(threadsRef);
 
-	$scope.createThread = function(username, title) {
+	$scope.createThread = function(title) {
 		$scope.threads.$add({
-			username: UserService.getUser().$email,
+			username: UserService.getUser().password.email,
 			title: title
 		});
 	};
