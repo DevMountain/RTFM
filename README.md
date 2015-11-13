@@ -112,7 +112,7 @@ angular.module('rtfmApp')
 
     <ul>
         <li ng-repeat="thread in threads">
-            <a ng-href="#/threads/{{thread.$id}}">
+            <a ui-sref="thread({threadId: thread.$id})">
                 <span>{{ thread.title }}</span>
                 <span>(by {{ thread.username }})</span>
             </a>
