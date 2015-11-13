@@ -256,7 +256,7 @@ At this point, you should be able to see a list of threads on the main `/threads
 We're going to add Firebase's authentication to our app. Buckle up.
 
 ## Step 1: Prepare the app
-You need to go to your Firebase app and enable authentication. For this app we're going to enable email/password authentication.
+You need to go to your Firebase app and enable authentication. For this app we're going to enable email/password authentication. Head over to your Firebase dashboard and configure the email/password authentication piece.
 
 Once that's finished, add these additional routes to your app:
 
