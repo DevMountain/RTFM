@@ -320,3 +320,5 @@ auth.$onAuth(function(authData) {
 	}
 });
 ```
+
+If you want another challenge, create a "logout" directive that checks the userService for the user's auth status and shows a `Log out` link if appropriate.  This directive could be placed anywhere in your app and would allow the user to see their current state and log out.
