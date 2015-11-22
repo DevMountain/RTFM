@@ -3,6 +3,9 @@
 RTFM
 ====
 
+##Objective
+Use Firebase and Angular to persist data into a web application that acts like a real-time forum
+
 In this project, you'll get comfortable with hooking Firebase to your Angular application in order to persist your data.
 
 We're going to create a multi-user, real-time forum (RTFM).
