@@ -10,6 +10,8 @@ In this project, you'll get comfortable with hooking Firebase to your Angular ap
 
 We're going to create a multi-user, real-time forum (RTFM).
 
+![alt text](https://github.com/DevMountain/RTFM/blob/master/preview.png?raw=true,"Forum example")
+
 ## Step 1: Create Project
 - Create the basic structure of your Angular application naming your app 'rtfmApp'.
 - After you include Angular, include firebase, angularfire, and ui-router as scripts in your html file (Google them), then the rest of your basic angular files.
